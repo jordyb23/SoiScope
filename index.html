@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SoiScope — Soi 6 Interactive Map</title>
+  <style>
+    :root{
+      --viz-panel:#11192b;
+      --viz-card:#18233a;
+      --viz-text:#f5f7fb;
+      --viz-muted:#9ba8c0;
+      --viz-border:#293653;
+      --viz-accent:#ff4d72;
+      --viz-accent-text:#ffffff;
+      --viz-accent-bg:#291a2c;
+      --viz-accent-bg-subtle:#1d1626;
+      --viz-series-2:#67aee8;
+      --viz-series-3:#f1cf52;
+      --bg:#090e1b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(circle at 10% 0,#291328 0,transparent 28rem),var(--bg);
+      color:var(--viz-text);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    main{max-width:1200px;margin:auto;padding:22px 18px 48px}
+    .space-y-4 > * + *{margin-top:16px}
+    .hero{
+      border:1px solid var(--viz-border);
+      border-radius:20px;
+      padding:22px;
+      background:var(--viz-panel);
+    }
+    .eyebrow{
+      color:var(--viz-accent);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    h1{margin:8px 0 6px;font-size:clamp(30px,5vw,52px);line-height:1}
+    .muted{color:var(--viz-muted)}
+    .filters{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+    .category{
+      display:flex;
+      min-height:102px;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:center;
+      border:1px solid var(--viz-border);
+      border-radius:16px;
+      padding:14px;
+      background:var(--viz-card);
+      color:var(--viz-text);
+      text-align:left;
+      cursor:pointer;
+    }
+    .category.active{
+      border-color:var(--viz-accent);
+      background:var(--viz-accent-bg-subtle);
+    }
+    .category strong{font-size:25px;margin:3px 0}
+    .small{font-size:11px;color:var(--viz-muted)}
+    .map{
+      overflow:hidden;
+      border:1px solid var(--viz-border);
+      border-radius:18px;
+      background:var(--viz-panel);
+    }
+    .road-cap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:42px;
+      background:color-mix(in srgb,var(--viz-muted) 25%,var(--viz-panel));
+      border-color:var(--viz-border);
+      font-weight:700;
+      font-size:13px;
+      letter-spacing:.16em;
+    }
+    .road-cap:first-child{border-bottom:1px solid var(--viz-border)}
+    .road-cap:last-child{border-top:1px solid var(--viz-border)}
+    .street{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr);
+      background:color-mix(in srgb,var(--viz-panel) 87%,black);
+    }
+    .side-col{min-width:0}
+    .side-title{
+      height:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--viz-muted);
+      font-size:10px;
+      letter-spacing:.1em;
+      border-bottom:1px solid var(--viz-border);
+    }
+    .side-track{
+      height:3000px;
+      padding:5px;
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+    .road{
+      background:
+        linear-gradient(
+          90deg,
+          transparent 47%,
+          color-mix(in srgb,var(--viz-accent) 68%,white) 47%,
+          color-mix(in srgb,var(--viz-accent) 68%,white) 53%,
+          transparent 53%
+        ),
+        color-mix(in srgb,var(--viz-muted) 27%,var(--viz-panel));
+      border-left:1px solid var(--viz-border);
+      border-right:1px solid var(--viz-border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .road strong{
+      writing-mode:vertical-rl;
+      letter-spacing:.18em;
+      color:var(--viz-muted);
+      font-size:11px;
+    }
+    .venue-wrap{
+      min-height:0;
+      transition:opacity .18s,filter .18s;
+      position:relative;
+    }
+    .venue-wrap.dim{opacity:.17;filter:saturate(.3)}
+    .venue-wrap.dim:hover{opacity:.55}
+    .venue{
+      height:100%;
+      width:100%;
+      text-align:left;
+      border:1px solid var(--viz-border);
+      background:var(--viz-card);
+      border-radius:8px;
+      padding:5px 7px;
+      color:var(--viz-text);
+      overflow:hidden;
+      cursor:pointer;
+    }
+    .venue.selected{border-color:var(--viz-accent);background:var(--viz-accent-bg-subtle)}
+    .venue.large .name{font-size:12px}
+    .venue.large{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:5px;
+    }
+    .name{font-size:10px;font-weight:600;line-height:1.15}
+    .addr{font-size:8px;color:var(--viz-muted);margin-top:2px}
+    .type{
+      font-size:6px;
+      font-weight:700;
+      border:1px solid var(--viz-border);
+      border-radius:999px;
+      padding:2px 4px;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+    .type.bar{color:var(--viz-accent);background:var(--viz-accent-bg)}
+    .type.food{background:color-mix(in srgb,var(--viz-series-2) 17%,transparent)}
+    .type.service{background:color-mix(in srgb,var(--viz-series-3) 17%,transparent)}
+    .type.closed{opacity:.65}
+    .junction{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      min-height:0;
+      border-top:1px solid var(--viz-border);
+      border-bottom:1px solid var(--viz-border);
+      background:color-mix(in srgb,var(--viz-accent-bg-subtle) 65%,var(--viz-panel));
+      color:var(--viz-accent);
+      font-weight:700;
+      font-size:9px;
+      text-align:center;
+      letter-spacing:.05em;
+    }
+    .junction small{
+      font-size:7px;
+      color:var(--viz-muted);
+      font-weight:500;
+      margin-top:2px;
+    }
+    .venue-details{
+      display:none;
+      margin-top:7px;
+      padding-top:7px;
+      border-top:1px solid var(--viz-border);
+    }
+    .venue.expanded .venue-details{display:block}
+    .venue.expanded{
+      border-color:var(--viz-accent);
+      background:var(--viz-accent-bg-subtle);
+      overflow:visible;
+    }
+    .detail-row{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      padding:4px 0;
+      border-bottom:1px solid var(--viz-border);
+      font-size:9px;
+    }
+    .detail-row span{color:var(--viz-muted)}
+    .detail-note{
+      font-size:9px;
+      color:var(--viz-muted);
+      line-height:1.4;
+      margin-top:7px;
+    }
+    .statusbar{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:8px;
+      font-size:13px;
+      color:var(--viz-muted);
+    }
+
+    @media(max-width:700px){
+      .filters{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:520px){
+      main{padding:12px 8px 36px}
+      .street{grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr)}
+      .side-track{height:2700px;padding:3px;gap:2px}
+      .road strong{font-size:8px}
+      .name{font-size:8px}
+      .venue.large .name{font-size:9px}
+      .addr{font-size:7px}
+      .type{font-size:5px;padding:1px 3px}
+      .category{min-height:88px;padding:10px}
+      .road-cap{height:36px;font-size:10px}
+    }
+  </style>
+</head>
+<body>
+<main>
+  <div class="space-y-4">
+    <section class="hero">
+      <div class="eyebrow">SoiScope • Pattaya</div>
+      <h1>Soi 6 Interactive Map</h1>
+      <p class="muted">A street-scale reconstruction based on the July 2026 map you supplied. Larger premises occupy more frontage, and Soi 6/1 cut-throughs appear on the correct side of the street.</p>
+    </section>
+
+    <section class="filters" id="filters"></section>
+
+    <section class="map">
+      <div class="road-cap">SECOND ROAD</div>
+
+      <div class="street">
+        <div class="side-col">
+          <div class="side-title">MAP LEFT</div>
+          <div id="left" class="side-track"></div>
+        </div>
+
+        <div class="road">
+          <strong>SOI 6</strong>
+        </div>
+
+        <div class="side-col">
+          <div class="side-title">MAP RIGHT</div>
+          <div id="right" class="side-track"></div>
+        </div>
+      </div>
+
+      <div class="road-cap">BEACH ROAD</div>
+    </section>
+
+    <div class="statusbar">
+      <span id="status"></span>
+      <span>July 2026 source layout</span>
+    </div>
+
+    <p class="muted" style="font-size:13px">Names, address ranges, venue classifications and pool-table markers are source-reported from the supplied community map and are not yet independently verified. Tap a venue tile to expand its details in place.</p>
+  </div>
+</main>
+
+<script>
+const raw=`L|437/80|Thai Rose|bar
+L|437/79|Good Fellas|bar
+L|437/78|3 Angels*|bar
+L|437/77|Omega*|bar
+L|437/76|Mods Bar*|bar
+L|437/75|Love Missile Bar|bar
+L|437/74|Perry Bar|bar
+L|437/73|Nikki Bar|bar
+L|437/72|Public Health Clinic|service
+L|437/71–69|Pawn Shop|service
+L|437/68–64|Pattaya Police Station|service
+L|437/62|Soho Bar|bar
+L|437/61|Sexy In The City*|bar
+L|437/60|Exotica*|bar
+L|437/59|Offshore Bar*|bar
+L|437/58|Tomcats Bar|bar
+L|437/57|Roxy Bar*|bar
+L|437/56|Foxy's Bar*|bar
+L|437/55|Showgirls|bar
+L|437/54|Playgirls|bar
+L|437/53|Poison|bar
+L|437/52|Candy Bar|bar
+L|437/51|Desire|bar
+L|437/50–49|Hero Bar (Pool Table)|bar
+L|437/48|Lisa Bar 3|bar
+L|437/47–46|Ruby Club|bar
+L|437/45|Lust|bar
+L|437/44|Butterfly Bar*|bar
+L|437/43|Kawaii Bar|bar
+L|437/42|Where Angels Play*|bar
+L|437/41|Chili Bar|bar
+L|437/40|Liquid Bar|bar
+L|437/38|Dress Shop & ATM|service
+L|437/37|Lollipop Bar|bar
+L|437/36|Horny Bar*|bar
+L|437/35|Spinners|bar
+L|437/34|The Pussy Club (Closed)|closed
+L|437/33|Soi 6 Bar|bar
+L|437/32|6's Wild|bar
+L|437/31|Wicked|bar
+L|437/30|Smoke and Kisses|bar
+L|437/29|Repent*|bar
+L|437/28|Play Pen*|bar
+L|437/27|Sweet Bar|bar
+L|437/26|Panda Bar Pink|bar
+L|437/25|Toy Box Bar|bar
+L|437/24–23|Red Point Bar|bar
+L|437/22|Boofies|bar
+L|437/21|Wet Six|bar
+L|437/20|Cooters Bar|bar
+L|437/19|The Spot|bar
+L|437/18|Thai Food + Kebab|food
+L|437/17|Utopia*|bar
+L|437/16|Seduction*|bar
+L|437/15|Passion*|bar
+L|437/14|Envy*|bar
+L|437/13|Minimart|service
+L|437/12|Averice*|bar
+L|437/11|Wrath*|bar
+L|437/10|La La Land Bar|bar
+L|437/9–8|Dolls Go-Go Bar|bar
+L|437/7|Maggie Choo Bar*|bar
+L|437/6|Halifax Bar|bar
+L|437/5|Pattaya Ink 6 - Tattoo|service
+L|437/4|Pharmacy|service
+L|437/3|Hungry 6|food
+L|437/2|Beauty Salon|service
+L|437/1|Danksters Beach Seaview Lounge|service
+R|437/165|The Corner Bar (Pool Table)|bar
+R|437/164–163|Fire (Pool Table)|bar
+R|437/162|Saigon Girl Bar|bar
+R|437/161–159|King Kong Bar|bar
+R|437/158|Ma Mao Bar|bar
+R|437/157|Perry Kaffeine|food
+R|437/156–155|Hollywood (Pool Table)|bar
+R|437/154|My Friend You Bar|bar
+R|437/153|6th Sense Bar|bar
+R|437/152|Sinner's|bar
+R|437/151|Elysium|bar
+R|437/150|Minimart/Pharmacy & ATM|service
+R|437/149|Oppa Bar|bar
+R|437/148–147|Smoke and Mirrors (Pool Table)|bar
+R|437/143|Kimochi Bar|bar
+R|437/142|VIP Bar|bar
+R|437/141–136|Queen Victoria Inn (Pool Table)|food
+R|437/135|Baba Bar|bar
+R|437/134|Neeta on Soi 6|bar
+R|437/133|Bandits Hideout|bar
+R|437/132|Tamar Centre Project Life Foundation|service
+R|437/131|Spider Girl Bar (Pool Table)|bar
+R|437/130|Panda Bar Red|bar
+R|437/129|Promises|bar
+R|437/128–127|Solo Club (Pool Table)|bar
+R|437/126|Nymphoz|bar
+R|437/125|Wet Pussy|bar
+R|437/124|Beauty Salon|service
+R|437/123|Bad Habits on Soi 6|bar
+R|437/122|Slutz on Soi 6|bar
+R|437/121|Benders Bar|bar
+R|437/120|Booty Call|bar
+R|437/119–118|Panda Bar (GoGo Upstairs)|bar
+R|437/117–116|Helicopter|bar
+R|437/115|Lady in Love|bar
+R|437/114|BTS Bar|bar
+R|437/113–112|Real Estate & Law Center|service
+R|437/111|Slice Pizza Pattaya|food
+R|437/110–109|Jasmine Pub (Closed)|closed
+R|437/108–107|Sandcastle Bar & Lounge (Pool Table)|bar
+R|437/106–105|Panda Bar Blue|bar
+R|437/104|Miyu Bar|bar
+R|437/103|Gold Bar|bar
+R|437/102|Secret Garden|bar
+R|437/101–100|All Season Bar (Pool Table)|bar
+R|437/99–98|Sandman Hotel (Pool Table)|food
+R|437/97|Cydonia Bar|bar
+R|437/96|Miso Bar|bar
+R|437/95–94|Kelaya 66 Bar|bar
+R|437/93|MJ Kitty Girl Bar|bar
+R|437/92|Valentines Bar|bar
+R|437/91|Aom One Stop Bar|bar
+R|437/90|AA Pharmacy|service
+R|437/89|One Stop Visa Shop|service
+R|437/88–87|Kiss Kool|bar
+R|437/86|Tattoo|service
+R|437/85|Bangkok Bank FX & ATM|service
+R||Stone Oven|food`;
+
+function spanFromAddress(address){
+  if(!address) return 1;
+  const part=address.split('/')[1]||'';
+  const nums=part.match(/\d+/g);
+  if(!nums||nums.length<2) return 1;
+  return Math.abs(Number(nums[0])-Number(nums[1]))+1;
+}
+
+const venues=raw.split('\n').map((r,i)=>{
+  const [side,address,name,type]=r.split('|');
+  return {id:i,side,address,name,type,pool:name.includes('Pool Table'),span:spanFromAddress(address)};
+});
+
+const counts={
+  all:venues.length,
+  bar:venues.filter(v=>v.type==='bar').length,
+  service:venues.filter(v=>v.type==='service').length,
+  food:venues.filter(v=>v.type==='food').length
+};
+
+const filterDefs=[
+  ['all','Everything','All mapped locations'],
+  ['bar','Bars','Nightlife venues'],
+  ['service','Services','Shops & essentials'],
+  ['food','Food','Food & hospitality']
+];
+
+const filterBox=document.getElementById('filters');
+filterDefs.forEach(([key,label,note])=>{
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='category';
+  b.dataset.filter=key;
+  b.innerHTML=`<span>${label}</span><strong>${counts[key]}</strong><span class="small">${note}</span>`;
+  b.addEventListener('click',()=>setFilter(key));
+  filterBox.appendChild(b);
+});
+
+function typeName(type){
+  return type==='bar'?'BAR':type==='food'?'FOOD':type==='service'?'SERVICE':'CLOSED';
+}
+
+let openId=null;
+
+function venueElement(v,weight){
+  const wrap=document.createElement('div');
+  wrap.className='venue-wrap';
+  wrap.dataset.type=v.type;
+  wrap.dataset.weight=weight;
+  wrap.style.flex=`${weight} 1 0`;
+
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='venue'+(v.span>=2?' large':'');
+  b.innerHTML=`
+    <div class="top">
+      <div class="name">${v.name}</div>
+      <span class="type ${v.type}">${typeName(v.type)}</span>
+    </div>
+    <div class="addr">${v.address||'Address not shown'}${v.pool?' • Pool':''}</div>
+    <div class="venue-details">
+      <div class="detail-row"><span>Venue</span><b>${typeName(v.type)}</b></div>
+      <div class="detail-row"><span>Address</span><b>${v.address||'Not shown'}</b></div>
+      <div class="detail-row"><span>Approx. frontage</span><b>${v.span>1?v.span+' address units':'1 address unit'}</b></div>
+      <div class="detail-row"><span>Pool table</span><b>${v.pool?'Marked on source':'Not indicated'}</b></div>
+      <div class="detail-note">More details will eventually live inside this expanded tile: hours, pricing, group affiliation, photos, facilities, socials and verification date.</div>
+    </div>`;
+
+  b.addEventListener('click',()=>{
+    const same=openId===v.id;
+
+    document.querySelectorAll('.venue-wrap').forEach(w=>{
+      const base=Number(w.dataset.weight||1);
+      w.style.flex=`${base} 1 0`;
+    });
+    document.querySelectorAll('.venue').forEach(x=>{
+      x.classList.remove('selected','expanded');
+    });
+
+    openId=same?null:v.id;
+
+    if(!same){
+      b.classList.add('selected','expanded');
+      // Give the expanded tile extra frontage while keeping the overall street length fixed.
+      wrap.style.flex=`${weight + 5} 1 0`;
+    }
+  });
+
+  wrap.appendChild(b);
+  return wrap;
+}
+
+function junction(weight){
+  const j=document.createElement('div');
+  j.className='junction';
+  j.style.flex=`${weight} 1 0`;
+  j.innerHTML='<span>TO SOI 6/1</span><small>cut-through</small>';
+  return j;
+}
+
+const leftVenues=venues.filter(v=>v.side==='L');
+const rightVenues=venues.filter(v=>v.side==='R');
+
+const rightBreakAfter=new Set([
+  'Smoke and Mirrors (Pool Table)',
+  'Tamar Centre Project Life Foundation',
+  'Slutz on Soi 6',
+  'Secret Garden'
+]);
+
+const JUNCTION_WEIGHT=2.3;
+const left=document.getElementById('left');
+const right=document.getElementById('right');
+
+leftVenues.forEach(v=>left.appendChild(venueElement(v,v.span)));
+
+rightVenues.forEach(v=>{
+  right.appendChild(venueElement(v,v.span));
+  if(rightBreakAfter.has(v.name)) right.appendChild(junction(JUNCTION_WEIGHT));
+});
+
+function setFilter(key){
+  document.querySelectorAll('.category').forEach(
+    b=>b.classList.toggle('active',b.dataset.filter===key)
+  );
+  document.querySelectorAll('.venue-wrap').forEach(
+    w=>w.classList.toggle('dim',key!=='all'&&w.dataset.type!==key)
+  );
+  const label=filterDefs.find(x=>x[0]===key)[1];
+  document.getElementById('status').textContent=
+    key==='all'
+      ? `${venues.length} mapped establishments • full street`
+      : `Spotlighting ${label.toLowerCase()} • other locations remain visible`;
+}
+
+setFilter('all');
+</script>
+</body>
+</html>
