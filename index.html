@@ -258,8 +258,8 @@
 <main>
   <div class="space-y-4">
     <section class="hero">
-      <div class="eyebrow">SoiScope • Pattaya</div>
-      <h1>Soi 6 Interactive Map</h1>
+      <div class="eyebrow">Pattaya • Soi 6 Interactive Map</div>
+      <h1>SoiScope</h1>
       <p class="muted">A street-scale reconstruction based on the July 2026 map you supplied. Larger premises occupy more frontage, and Soi 6/1 cut-throughs appear on the correct side of the street.</p>
     </section>
 
@@ -507,7 +507,6 @@ function venueElement(v,weight){
 
     if(!same){
       b.classList.add('selected','expanded');
-      // Give the expanded tile extra frontage while keeping the overall street length fixed.
       wrap.style.flex=`${weight + 5} 1 0`;
     }
   });
