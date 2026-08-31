@@ -1,6 +1,183 @@
 {
   "schema_version": "1.1",
   "venues": {
+    "soi6-001": {
+      "name": "Thai Rose",
+      "former_names": [],
+      "address": "437/80",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "uncertain",
+      "opening_hours": {"display": "15:00–01:00", "note": "A current specialist directory lists these hours but also marks Thai Rose closed. The July 2026 source map still shows the venue, so current status needs an on-street check.", "confidence": "low"},
+      "description": "Long-running bar at the Second Road end of Soi 6. Current online sources conflict on whether it is still operating, so SoiScope is keeping it mapped but flagging the status for verification.",
+      "vibe": "Open-front Soi 6 bar; one current directory describes a sociable, football-friendly setup.",
+      "known_for": ["Second Road end", "football-friendly reputation"],
+      "facilities": [],
+      "lady_drink": {"display": "Price unavailable", "amount_thb": null, "verification_date": null, "confidence": "unverified"},
+      "group_affiliation": null,
+      "verification_date": "2026-08-31",
+      "confidence": "low",
+      "sources": [
+        {"label": "Explore Nightlife — Thai Rose", "url": "https://girlsbarmap.com/places/pattaya-soi-6-girls-bar-thai-rose", "type": "current_directory", "supports": ["hours", "venue format", "closed flag"]}
+      ]
+    },
+    "soi6-002": {
+      "name": "Good Fellas Bar",
+      "former_names": [],
+      "address": "437/79",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "current",
+      "opening_hours": {"display": "15:00–01:00", "note": "Current directories cluster around 14:30/15:00 to 01:00.", "confidence": "high"},
+      "description": "Established Soi 6 bar near the Second Road entrance. It has operated for more than a decade and is part of the Baba Group.",
+      "vibe": "Classic open-front Soi 6 setup with a straightforward bar layout and active lineup.",
+      "known_for": ["Baba Group", "long-running venue"],
+      "facilities": ["short_time_rooms"],
+      "lady_drink": {"display": "฿210", "amount_thb": 210, "verification_date": "2025-11-12", "confidence": "medium"},
+      "group_affiliation": "Baba Group",
+      "verification_date": "2026-08-31",
+      "confidence": "high",
+      "sources": [
+        {"label": "Cheers Pattaya — Good Fellas", "url": "https://www.cheerspattaya.com/business/1170/Good_Fellas_Bar_-_Soi_6_Pattaya", "type": "current_directory", "supports": ["current status", "hours", "long-running operation"]},
+        {"label": "Pattaya Forum visit report — Nov 2025", "url": "https://www.pattayaforum.net/forums/threads/good-fellas-soi-6.9633/", "type": "community_visit", "supports": ["lady drink price", "ST rooms", "layout", "hours"]},
+        {"label": "Pattaya Insider — Baba Group", "url": "https://pattaya-insider.com/nightlife/baba-bar/", "type": "current_directory", "supports": ["Baba Group affiliation"]}
+      ]
+    },
+    "soi6-003": {
+      "name": "3 Angels Bar",
+      "former_names": [],
+      "address": "437/78",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "current",
+      "opening_hours": {"display": "15:00–01:00", "note": "Cheers Pattaya lists 15:00–01:00; another current directory lists 13:00–01:00, so early-afternoon opening can vary.", "confidence": "medium"},
+      "description": "Nightwish Group Soi 6 bar near the Second Road end, also associated with guesthouse accommodation.",
+      "vibe": "Traditional Soi 6 bar format with a long-running presence and guesthouse component.",
+      "known_for": ["Nightwish Group", "guesthouse"],
+      "facilities": ["guesthouse_rooms"],
+      "lady_drink": {"display": "Price unavailable", "amount_thb": null, "verification_date": null, "confidence": "unverified"},
+      "group_affiliation": "Nightwish Group",
+      "verification_date": "2026-08-31",
+      "confidence": "high",
+      "sources": [
+        {"label": "Cheers Pattaya — 3 Angels", "url": "https://www.cheerspattaya.com/business/963/3_Angels_Bar_-_Soi_6_Pattaya", "type": "current_directory", "supports": ["current status", "hours"]},
+        {"label": "Explore Nightlife — 3 Angels", "url": "https://pattayabarmap.com/places/pattaya-soi-6-girls-bar-3-angels-bar-guesthouse", "type": "current_directory", "supports": ["guesthouse", "hours", "Nightwish affiliation"]},
+        {"label": "Thai Old Driver — Nightwish Group roster", "url": "https://thaiolddriver.com/en/posts/nightwish-soi-6-beer-bar", "type": "specialist_directory", "supports": ["Nightwish Group affiliation"]}
+      ]
+    },
+    "soi6-004": {
+      "name": "Omega Bar",
+      "former_names": [],
+      "address": "437/77",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "current",
+      "opening_hours": {"display": "15:00–01:00", "note": "Current Omega social/profile material states daily 15:00–01:00; Cheers describes 15:00 until late.", "confidence": "high"},
+      "description": "Nightwish Group bar near the Second Road end of Soi 6 with an active current social presence.",
+      "vibe": "Mainstream Soi 6 party-bar format with regular afternoon-to-late-night activity.",
+      "known_for": ["Nightwish Group", "active social presence"],
+      "facilities": [],
+      "lady_drink": {"display": "Price unavailable", "amount_thb": null, "verification_date": null, "confidence": "unverified"},
+      "group_affiliation": "Nightwish Group",
+      "verification_date": "2026-08-31",
+      "confidence": "high",
+      "sources": [
+        {"label": "Cheers Pattaya — Omega Bar", "url": "https://www.cheerspattaya.com/business/970/Omega_Bar_-_Soi_6_Pattaya", "type": "current_directory", "supports": ["current status", "address", "hours"]},
+        {"label": "Omega Bar current social mirror", "url": "https://twstalker.com/omegabarsoi6", "type": "social_mirror", "supports": ["current activity", "daily hours"]},
+        {"label": "Thai Old Driver — Nightwish Group roster", "url": "https://thaiolddriver.com/en/posts/nightwish-soi-6-beer-bar", "type": "specialist_directory", "supports": ["Nightwish Group affiliation"]}
+      ]
+    },
+    "soi6-005": {
+      "name": "Mod's Bar",
+      "former_names": [],
+      "address": "437/76",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "current",
+      "opening_hours": {"display": "Not yet verified", "note": "The venue is currently listed and active, but the checked current source does not publish a dependable daily schedule.", "confidence": "low"},
+      "description": "Nightwish Group Soi 6 bar immediately beside Omega and Love Missile near the Second Road end.",
+      "vibe": "Standard Soi 6 bar format; current directory copy positions it as a relaxed stop for drinks.",
+      "known_for": ["Nightwish Group"],
+      "facilities": [],
+      "lady_drink": {"display": "Price unavailable", "amount_thb": null, "verification_date": null, "confidence": "unverified"},
+      "group_affiliation": "Nightwish Group",
+      "verification_date": "2026-08-31",
+      "confidence": "high",
+      "sources": [
+        {"label": "Cheers Pattaya — Mod's Bar", "url": "https://www.cheerspattaya.com/business/1169/Mods_Bar_-_Soi_6_Pattaya", "type": "current_directory", "supports": ["current status", "address"]},
+        {"label": "Thai Old Driver — Nightwish Group roster", "url": "https://thaiolddriver.com/en/posts/nightwish-soi-6-beer-bar", "type": "specialist_directory", "supports": ["Nightwish Group affiliation"]}
+      ]
+    },
+    "soi6-006": {
+      "name": "Love Missile Bar",
+      "former_names": [],
+      "address": "437/75",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "current",
+      "opening_hours": {"display": "14:00–01:00", "note": "Current Cheers Pattaya listing gives 14:00–01:00.", "confidence": "high"},
+      "description": "Independent Soi 6 bar near the Second Road end, positioned between Mod's and Perry Bar.",
+      "vibe": "Straightforward open-front Soi 6 beer-bar atmosphere.",
+      "known_for": ["independent"],
+      "facilities": [],
+      "lady_drink": {"display": "Price unavailable", "amount_thb": null, "verification_date": null, "confidence": "unverified"},
+      "group_affiliation": "Independent",
+      "verification_date": "2026-08-31",
+      "confidence": "medium",
+      "sources": [
+        {"label": "Cheers Pattaya — Love Missile", "url": "https://www.cheerspattaya.com/business/1168/Love_Missile_Bar_-_Soi_6_Pattaya", "type": "current_directory", "supports": ["current status", "address", "hours"]},
+        {"label": "Pattaya community discussion — Nov 2025", "url": "https://www.reddit.com/r/Pattaya/comments/1p4in6q/soi_6_nightwish_bars/", "type": "community", "supports": ["independent reputation"]}
+      ]
+    },
+    "soi6-007": {
+      "name": "Perry Bar",
+      "former_names": [],
+      "address": "437/74",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "current",
+      "opening_hours": {"display": "Not yet verified", "note": "Current directory confirms the venue is operating but does not publish a reliable schedule.", "confidence": "low"},
+      "description": "Long-running Soi 6 bar between Love Missile and Nikki Bar near the Second Road end.",
+      "vibe": "Traditional Soi 6 bar format with a long-established presence on the street.",
+      "known_for": ["long-running Soi 6 venue"],
+      "facilities": [],
+      "lady_drink": {"display": "Price unavailable", "amount_thb": null, "verification_date": null, "confidence": "unverified"},
+      "group_affiliation": null,
+      "verification_date": "2026-08-31",
+      "confidence": "medium",
+      "sources": [
+        {"label": "Cheers Pattaya — Perry Bar", "url": "https://www.cheerspattaya.com/business/1167/Perry_Bar_-_Soi_6_Pattaya", "type": "current_directory", "supports": ["current status", "address"]}
+      ]
+    },
+    "soi6-008": {
+      "name": "Nikki Bar",
+      "former_names": ["O Bar Pattaya"],
+      "address": "437/73",
+      "side_of_soi": "left",
+      "category": "nightlife",
+      "subcategory": "soi_6_bar",
+      "status": "current",
+      "opening_hours": {"display": "14:00–01:00", "note": "Current Cheers Pattaya listing gives 14:00–01:00.", "confidence": "high"},
+      "description": "Newer Soi 6 bar that opened in July 2025 in the former O Bar premises.",
+      "vibe": "Modern Soi 6 bar with an active current lineup and regular social activity.",
+      "known_for": ["opened July 2025", "formerly O Bar"],
+      "facilities": [],
+      "lady_drink": {"display": "฿210", "amount_thb": 210, "verification_date": "2026-08-31", "confidence": "high"},
+      "group_affiliation": null,
+      "verification_date": "2026-08-31",
+      "confidence": "high",
+      "sources": [
+        {"label": "Cheers Pattaya — Nikki Bar", "url": "https://www.cheerspattaya.com/business/1166/Nikki_Bar_-_Soi_6_Pattaya", "type": "current_directory", "supports": ["current status", "address", "hours", "former name", "opening date"]},
+        {"label": "Soi 6 Pattaya staff gratuity page", "url": "https://pattayasoipearl.com/", "type": "current_venue_service", "supports": ["current operation", "lady drink amount"]}
+      ]
+    },
     "soi6-040": {
       "name": "Wicked Bar",
       "former_names": ["Viking Bar"],
@@ -9,23 +186,14 @@
       "category": "nightlife",
       "subcategory": "soi_6_bar",
       "status": "current",
-      "opening_hours": {
-        "display": "16:00–02:00",
-        "note": "Hours can vary. Recent venue posts advertise 4 PM–2 AM; another current specialist listing gives 2 PM–2 AM.",
-        "confidence": "medium"
-      },
+      "opening_hours": {"display": "16:00–02:00", "note": "Hours can vary. Recent venue posts advertise 4 PM–2 AM; another current specialist listing gives 2 PM–2 AM.", "confidence": "medium"},
       "description": "Independent Soi 6 bar at 437/31, formerly Viking Bar. Wicked has been operating under its current name since 2017 and had a management change in May 2025.",
       "vibe": "Loud, high-energy Soi 6 party bar with an open-front setup and active bar-girl lineup.",
       "known_for": ["party atmosphere", "ST rooms", "former Viking Bar", "independent"],
       "facilities": ["short_time_rooms"],
       "food": null,
       "drinks": "Full bar",
-      "lady_drink": {
-        "display": "Price unavailable",
-        "amount_thb": null,
-        "verification_date": null,
-        "confidence": "unverified"
-      },
+      "lady_drink": {"display": "Price unavailable", "amount_thb": null, "verification_date": null, "confidence": "unverified"},
       "price_notes": [],
       "promotions": [],
       "music": "Loud contemporary party music",
@@ -37,41 +205,14 @@
       "x": ["@WickedSoi6", "@TonyBak20590658"],
       "youtube": "@WickedBarSoi6Radio",
       "google_maps": null,
-      "contact": {
-        "phone": null,
-        "line": null,
-        "whatsapp": null
-      },
+      "contact": {"phone": null, "line": null, "whatsapp": null},
       "review_summary": "Recent specialist and community material consistently describes Wicked as an established, lively Soi 6 bar.",
       "community_notes": "ST rooms are reported as available. Individual room-condition reports are subjective and are not treated as verified quality ratings.",
       "verification_date": "2026-08-31",
       "confidence": "high",
       "sources": [
-        {
-          "label": "Thai Old Driver — Wicked Bar",
-          "url": "https://thaiolddriver.com/en/nightlife/wicked-bar",
-          "type": "specialist_directory",
-          "published_or_updated": "2026-08-28",
-          "supports": ["status", "location", "former_name", "2017 rename", "2025 management change", "hours", "ST rooms"]
-        },
-        {
-          "label": "Wicked Bar Soi 6 on X",
-          "url": "https://x.com/WickedSoi6/with_replies",
-          "type": "official_social",
-          "supports": ["current operation", "party positioning", "website", "location"]
-        },
-        {
-          "label": "TonyBak Wicked social feed",
-          "url": "https://www.twstalker.com/TonyBak20590658",
-          "type": "social_mirror",
-          "supports": ["current August 2026 activity", "recent advertised hours", "music/party positioning", "social channels"]
-        },
-        {
-          "label": "Wicked Bar Soi 6 Radio — YouTube",
-          "url": "https://www.youtube.com/@WickedBarSoi6Radio",
-          "type": "official_or_affiliated_social",
-          "supports": ["current operation", "general atmosphere", "approximate hours"]
-        }
+        {"label": "Thai Old Driver — Wicked Bar", "url": "https://thaiolddriver.com/en/nightlife/wicked-bar", "type": "specialist_directory", "published_or_updated": "2026-08-28", "supports": ["status", "location", "former_name", "2017 rename", "2025 management change", "hours", "ST rooms"]},
+        {"label": "Wicked Bar Soi 6 on X", "url": "https://x.com/WickedSoi6/with_replies", "type": "official_social", "supports": ["current operation", "party positioning", "website", "location"]}
       ]
     }
   }
