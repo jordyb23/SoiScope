@@ -5,163 +5,58 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>SoiScope — Soi 6 Interactive Map</title>
   <style>
-    :root{--panel:#11192b;--card:#18233a;--text:#f5f7fb;--muted:#9ba8c0;--border:#293653;--pink:#ff4d72;--pinkbg:#291a2c;--blue:#67aee8;--yellow:#f1cf52;--green:#55d7a6;--bg:#090e1b}
+    :root{--panel:#11192b;--card:#18233a;--text:#f5f7fb;--muted:#9ba8c0;--border:#293653;--pink:#ff4d72;--pinkbg:#291a2c;--blue:#67aee8;--yellow:#f1cf52;--green:#55d7a6;--red:#ff7b89;--bg:#090e1b}
     *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 10% 0,#291328 0,transparent 28rem),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} main{max-width:1200px;margin:auto;padding:22px 18px 48px}.space-y-4>*+*{margin-top:16px}
     .hero{border:1px solid var(--border);border-radius:20px;padding:18px 22px 22px;background:var(--panel);text-align:center}.brand-logo{display:block;width:min(420px,88vw);height:auto;margin:0 auto 10px;border-radius:16px}.eyebrow{color:var(--pink);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.muted{color:var(--muted)}.hero .muted{max-width:760px;margin:10px auto 0;line-height:1.5}
     .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.category{display:flex;min-height:102px;flex-direction:column;align-items:flex-start;justify-content:center;border:1px solid var(--border);border-radius:16px;padding:14px;background:var(--card);color:var(--text);text-align:left;cursor:pointer}.category.active{border-color:var(--pink);background:#1d1626}.category strong{font-size:25px;margin:3px 0}.small{font-size:11px;color:var(--muted)}
     .map{overflow:hidden;border:1px solid var(--border);border-radius:18px;background:var(--panel)}.road-cap{display:flex;align-items:center;justify-content:center;height:42px;background:#252e40;border-color:var(--border);font-weight:700;font-size:13px;letter-spacing:.16em}.road-cap:first-child{border-bottom:1px solid var(--border)}.road-cap:last-child{border-top:1px solid var(--border)}.street{display:grid;grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr);background:#0e1524}.side-col{min-width:0}.side-title{height:28px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:10px;letter-spacing:.1em;border-bottom:1px solid var(--border)}.side-track{height:3000px;padding:5px;display:flex;flex-direction:column;gap:3px}.road{background:linear-gradient(90deg,transparent 47%,#ff7895 47%,#ff7895 53%,transparent 53%),#323a4a;border-left:1px solid var(--border);border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center}.road strong{writing-mode:vertical-rl;letter-spacing:.18em;color:var(--muted);font-size:11px}
-    .venue-wrap{min-height:0;transition:opacity .18s,filter .18s;position:relative}.venue-wrap.dim{opacity:.17;filter:saturate(.3)}.venue-wrap.dim:hover{opacity:.55}.venue{height:100%;width:100%;text-align:left;border:1px solid var(--border);background:var(--card);border-radius:8px;padding:5px 7px;color:var(--text);overflow:hidden;cursor:pointer}.venue.selected{border-color:var(--pink);background:#1d1626}.venue.has-profile{border-color:#44526f}.venue.has-profile .name:after{content:'  ✓';color:var(--green);font-size:8px}.venue.large .name{font-size:12px}.venue.large{display:flex;flex-direction:column;justify-content:center}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:5px}.name{font-size:10px;font-weight:600;line-height:1.15}.addr{font-size:8px;color:var(--muted);margin-top:2px}.type{font-size:6px;font-weight:700;border:1px solid var(--border);border-radius:999px;padding:2px 4px;white-space:nowrap;flex:0 0 auto}.type.bar{color:var(--pink);background:var(--pinkbg)}.type.food{background:#17283c}.type.service{background:#302d1a}.type.closed{opacity:.65}
+    .venue-wrap{min-height:0;transition:opacity .18s,filter .18s;position:relative}.venue-wrap.dim{opacity:.17;filter:saturate(.3)}.venue-wrap.dim:hover{opacity:.55}.venue{height:100%;width:100%;text-align:left;border:1px solid var(--border);background:var(--card);border-radius:8px;padding:5px 7px;color:var(--text);overflow:hidden;cursor:pointer}.venue.selected{border-color:var(--pink);background:#1d1626}.venue.has-profile{border-color:#44526f}.venue.has-profile .name:after{content:'  ✓';color:var(--green);font-size:8px}.venue.large .name{font-size:12px}.venue.large{display:flex;flex-direction:column;justify-content:center}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:5px}.name{font-size:10px;font-weight:600;line-height:1.15}.addr{font-size:8px;color:var(--muted);margin-top:2px}.type{font-size:6px;font-weight:700;border:1px solid var(--border);border-radius:999px;padding:2px 4px;white-space:nowrap;flex:0 0 auto}.type.bar{color:var(--pink);background:var(--pinkbg)}.type.food{background:#17283c}.type.service{background:#302d1a}.type.closed{color:var(--red);opacity:.9}
     .junction{display:flex;align-items:center;justify-content:center;flex-direction:column;min-height:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#1d1626;color:var(--pink);font-weight:700;font-size:9px;text-align:center;letter-spacing:.05em}.junction small{font-size:7px;color:var(--muted);font-weight:500;margin-top:2px}
-    .venue-details{display:none;margin-top:7px;padding-top:8px;border-top:1px solid var(--border)}.venue.expanded .venue-details{display:block}.venue.expanded{border-color:var(--pink);background:#171b2d;overflow:visible}.detail-row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);font-size:9px}.detail-row span{color:var(--muted)}.detail-note{font-size:9px;color:var(--muted);line-height:1.45;margin-top:7px}
-    .profile-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px}.verified{display:inline-flex;align-items:center;gap:4px;color:var(--green);font-size:7px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.profile-desc{font-size:9px;line-height:1.45;margin:7px 0;color:#e5e9f2}.chips{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.chip{font-size:7px;padding:3px 5px;border-radius:999px;border:1px solid var(--border);background:#121a2c;color:#dce3ef}.hours-alert{font-size:8px;line-height:1.4;padding:6px;border-radius:7px;background:#242033;border:1px solid #49364b;color:#d7cddd;margin-top:6px}.profile-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.profile-link{font-size:8px;padding:4px 6px;border:1px solid #465778;border-radius:6px;color:#cbdcff;text-decoration:none}.confidence{font-size:7px;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-top:7px}.statusbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
-    @media(max-width:700px){.filters{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){main{padding:12px 8px 36px}.hero{padding:12px 12px 16px}.brand-logo{width:min(300px,92vw);margin-bottom:8px}.street{grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr)}.side-track{height:2700px;padding:3px;gap:2px}.road strong{font-size:8px}.name{font-size:8px}.venue.large .name{font-size:9px}.addr{font-size:7px}.type{font-size:5px;padding:1px 3px}.category{min-height:88px;padding:10px}.road-cap{height:36px;font-size:10px}.profile-desc,.detail-row,.detail-note{font-size:8px}}
+    .venue-details{display:none;margin-top:7px;padding-top:8px;border-top:1px solid var(--border)}.venue.expanded .venue-details{display:block}.venue.expanded{border-color:var(--pink);background:#171b2d;overflow:visible}.detail-row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);font-size:9px}.detail-row span{color:var(--muted)}.detail-row b{text-align:right}.detail-note{font-size:8px;color:var(--muted);line-height:1.45;margin-top:7px}
+    .profile-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px}.profile-head b{font-size:11px}.research-state{display:inline-flex;align-items:center;gap:4px;font-size:7px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.research-state.checked{color:var(--green)}.research-state.pending{color:var(--yellow)}.research-state.closed{color:var(--red)}.profile-desc{font-size:9px;line-height:1.45;margin:7px 0;color:#e5e9f2}.chips{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}.chip{font-size:7px;padding:3px 5px;border-radius:999px;border:1px solid var(--border);background:#121a2c;color:#dce3ef}.profile-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.profile-link{font-size:8px;padding:4px 6px;border:1px solid #465778;border-radius:6px;color:#cbdcff;text-decoration:none}.profile-link:hover{border-color:var(--pink)}.confidence{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:7px}.vibe{font-size:8px;line-height:1.45;padding:6px;border-radius:7px;background:#121a2c;border:1px solid var(--border);color:#dce3ef;margin-top:7px}.statusbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}.load-error{padding:18px;border:1px solid #733b4a;background:#26131c;border-radius:14px;color:#ffd3da}
+    @media(max-width:700px){.filters{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){main{padding:12px 8px 36px}.hero{padding:12px 12px 16px}.brand-logo{width:min(300px,92vw);margin-bottom:8px}.street{grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr)}.side-track{height:2700px;padding:3px;gap:2px}.road strong{font-size:8px}.name{font-size:8px}.venue.large .name{font-size:9px}.addr{font-size:7px}.type{font-size:5px;padding:1px 3px}.category{min-height:88px;padding:10px}.road-cap{height:36px;font-size:10px}.profile-desc,.detail-row,.detail-note,.vibe{font-size:8px}}
   </style>
 </head>
 <body>
 <main><div class="space-y-4">
-  <section class="hero"><img class="brand-logo" src="assets/soiscope-logo-final.png?v=1" alt="SoiScope logo"><div class="eyebrow">Pattaya • Soi 6 Interactive Map</div><p class="muted">A street-scale reconstruction based on the July 2026 source map, now being progressively enriched with independently researched venue profiles.</p></section>
+  <section class="hero"><img class="brand-logo" src="assets/soiscope-logo-final.png?v=1" alt="SoiScope logo"><div class="eyebrow">Pattaya • Soi 6 Interactive Map</div><p class="muted">Every establishment on the map is now driven by the SoiScope venue database. As we verify each place, researched details replace the placeholders automatically.</p></section>
   <section class="filters" id="filters"></section>
-  <section class="map"><div class="road-cap">SECOND ROAD</div><div class="street"><div class="side-col"><div class="side-title">MAP LEFT</div><div id="left" class="side-track"></div></div><div class="road"><strong>SOI 6</strong></div><div class="side-col"><div class="side-title">MAP RIGHT</div><div id="right" class="side-track"></div></div></div><div class="road-cap">BEACH ROAD</div></section>
-  <div class="statusbar"><span id="status"></span><span>Research prototype • Wicked profile live</span></div>
-  <p class="muted" style="font-size:13px">Tap a venue to expand it. A green check beside a venue name means an independently researched SoiScope profile is available; other tiles still show source-map-only information.</p>
+  <section class="map" id="map"><div class="road-cap">SECOND ROAD</div><div class="street"><div class="side-col"><div class="side-title">MAP LEFT</div><div id="left" class="side-track"></div></div><div class="road"><strong>SOI 6</strong></div><div class="side-col"><div class="side-title">MAP RIGHT</div><div id="right" class="side-track"></div></div></div><div class="road-cap">BEACH ROAD</div></section>
+  <div class="statusbar"><span id="status">Loading venue database…</span><span id="researchCount"></span></div>
+  <p class="muted" style="font-size:13px">Tap any venue to open the same SoiScope profile format. A green check means the venue has completed a research pass; yellow “research pending” fields are deliberately left unverified rather than guessed.</p>
 </div></main>
 <script>
-const raw=`L|437/80|Thai Rose|bar
-L|437/79|Good Fellas|bar
-L|437/78|3 Angels*|bar
-L|437/77|Omega*|bar
-L|437/76|Mods Bar*|bar
-L|437/75|Love Missile Bar|bar
-L|437/74|Perry Bar|bar
-L|437/73|Nikki Bar|bar
-L|437/72|Public Health Clinic|service
-L|437/71–69|Pawn Shop|service
-L|437/68–64|Pattaya Police Station|service
-L|437/62|Soho Bar|bar
-L|437/61|Sexy In The City*|bar
-L|437/60|Exotica*|bar
-L|437/59|Offshore Bar*|bar
-L|437/58|Tomcats Bar|bar
-L|437/57|Roxy Bar*|bar
-L|437/56|Foxy's Bar*|bar
-L|437/55|Showgirls|bar
-L|437/54|Playgirls|bar
-L|437/53|Poison|bar
-L|437/52|Candy Bar|bar
-L|437/51|Desire|bar
-L|437/50–49|Hero Bar (Pool Table)|bar
-L|437/48|Lisa Bar 3|bar
-L|437/47–46|Ruby Club|bar
-L|437/45|Lust|bar
-L|437/44|Butterfly Bar*|bar
-L|437/43|Kawaii Bar|bar
-L|437/42|Where Angels Play*|bar
-L|437/41|Chili Bar|bar
-L|437/40|Liquid Bar|bar
-L|437/38|Dress Shop & ATM|service
-L|437/37|Lollipop Bar|bar
-L|437/36|Horny Bar*|bar
-L|437/35|Spinners|bar
-L|437/34|The Pussy Club (Closed)|closed
-L|437/33|Soi 6 Bar|bar
-L|437/32|6's Wild|bar
-L|437/31|Wicked|bar
-L|437/30|Smoke and Kisses|bar
-L|437/29|Repent*|bar
-L|437/28|Play Pen*|bar
-L|437/27|Sweet Bar|bar
-L|437/26|Panda Bar Pink|bar
-L|437/25|Toy Box Bar|bar
-L|437/24–23|Red Point Bar|bar
-L|437/22|Boofies|bar
-L|437/21|Wet Six|bar
-L|437/20|Cooters Bar|bar
-L|437/19|The Spot|bar
-L|437/18|Thai Food + Kebab|food
-L|437/17|Utopia*|bar
-L|437/16|Seduction*|bar
-L|437/15|Passion*|bar
-L|437/14|Envy*|bar
-L|437/13|Minimart|service
-L|437/12|Averice*|bar
-L|437/11|Wrath*|bar
-L|437/10|La La Land Bar|bar
-L|437/9–8|Dolls Go-Go Bar|bar
-L|437/7|Maggie Choo Bar*|bar
-L|437/6|Halifax Bar|bar
-L|437/5|Pattaya Ink 6 - Tattoo|service
-L|437/4|Pharmacy|service
-L|437/3|Hungry 6|food
-L|437/2|Beauty Salon|service
-L|437/1|Danksters Beach Seaview Lounge|service
-R|437/165|The Corner Bar (Pool Table)|bar
-R|437/164–163|Fire (Pool Table)|bar
-R|437/162|Saigon Girl Bar|bar
-R|437/161–159|King Kong Bar|bar
-R|437/158|Ma Mao Bar|bar
-R|437/157|Perry Kaffeine|food
-R|437/156–155|Hollywood (Pool Table)|bar
-R|437/154|My Friend You Bar|bar
-R|437/153|6th Sense Bar|bar
-R|437/152|Sinner's|bar
-R|437/151|Elysium|bar
-R|437/150|Minimart/Pharmacy & ATM|service
-R|437/149|Oppa Bar|bar
-R|437/148–147|Smoke and Mirrors (Pool Table)|bar
-R|437/143|Kimochi Bar|bar
-R|437/142|VIP Bar|bar
-R|437/141–136|Queen Victoria Inn (Pool Table)|food
-R|437/135|Baba Bar|bar
-R|437/134|Neeta on Soi 6|bar
-R|437/133|Bandits Hideout|bar
-R|437/132|Tamar Centre Project Life Foundation|service
-R|437/131|Spider Girl Bar (Pool Table)|bar
-R|437/130|Panda Bar Red|bar
-R|437/129|Promises|bar
-R|437/128–127|Solo Club (Pool Table)|bar
-R|437/126|Nymphoz|bar
-R|437/125|Wet Pussy|bar
-R|437/124|Beauty Salon|service
-R|437/123|Bad Habits on Soi 6|bar
-R|437/122|Slutz on Soi 6|bar
-R|437/121|Benders Bar|bar
-R|437/120|Booty Call|bar
-R|437/119–118|Panda Bar (GoGo Upstairs)|bar
-R|437/117–116|Helicopter|bar
-R|437/115|Lady in Love|bar
-R|437/114|BTS Bar|bar
-R|437/113–112|Real Estate & Law Center|service
-R|437/111|Slice Pizza Pattaya|food
-R|437/110–109|Jasmine Pub (Closed)|closed
-R|437/108–107|Sandcastle Bar & Lounge (Pool Table)|bar
-R|437/106–105|Panda Bar Blue|bar
-R|437/104|Miyu Bar|bar
-R|437/103|Gold Bar|bar
-R|437/102|Secret Garden|bar
-R|437/101–100|All Season Bar (Pool Table)|bar
-R|437/99–98|Sandman Hotel (Pool Table)|food
-R|437/97|Cydonia Bar|bar
-R|437/96|Miso Bar|bar
-R|437/95–94|Kelaya 66 Bar|bar
-R|437/93|MJ Kitty Girl Bar|bar
-R|437/92|Valentines Bar|bar
-R|437/91|Aom One Stop Bar|bar
-R|437/90|AA Pharmacy|service
-R|437/89|One Stop Visa Shop|service
-R|437/88–87|Kiss Kool|bar
-R|437/86|Tattoo|service
-R|437/85|Bangkok Bank FX & ATM|service
-R||Stone Oven|food`;
+let venueDb={defaults:{},venue_fields:[],venues:[]};
+let researched={};
+let venues=[];
+let profiles={};
+let openId=null;
+const filterDefs=[['all','Everything','All mapped locations'],['bar','Bars','Soi 6 bars & agogos'],['service','Services','Shops & essentials'],['food','Food','Restaurants & food']];
+const rightBreakAfter=new Set(['soi6-082','soi6-089','soi6-098','soi6-112']);
+const JUNCTION_WEIGHT=2.3;
+
 function spanFromAddress(address){if(!address)return 1;const p=address.split('/')[1]||'';const n=p.match(/\d+/g);return(!n||n.length<2)?1:Math.abs(Number(n[0])-Number(n[1]))+1}
-const venues=raw.split('\n').map((r,i)=>{const[side,address,name,type]=r.split('|');return{id:i,dbid:`soi6-${String(i+1).padStart(3,'0')}`,side,address,name,type,pool:name.includes('Pool Table'),span:spanFromAddress(address)}});
-const counts={all:venues.length,bar:venues.filter(v=>v.type==='bar').length,service:venues.filter(v=>v.type==='service').length,food:venues.filter(v=>v.type==='food').length};const filterDefs=[['all','Everything','All mapped locations'],['bar','Bars','Nightlife venues'],['service','Services','Shops & essentials'],['food','Food','Food & hospitality']];let researched={};
-const filterBox=document.getElementById('filters');filterDefs.forEach(([key,label,note])=>{const b=document.createElement('button');b.type='button';b.className='category';b.dataset.filter=key;b.innerHTML=`<span>${label}</span><strong>${counts[key]}</strong><span class="small">${note}</span>`;b.addEventListener('click',()=>setFilter(key));filterBox.appendChild(b)});
-function typeName(t){return t==='bar'?'BAR':t==='food'?'FOOD':t==='service'?'SERVICE':'CLOSED'} function cleanName(n){return n.replace(' (Pool Table)','').replace(' (Closed)','').replace(/\*$/,'')}
-function genericDetails(v){return `<div class="detail-row"><span>Venue</span><b>${typeName(v.type)}</b></div><div class="detail-row"><span>Address</span><b>${v.address||'Not shown'}</b></div><div class="detail-row"><span>Approx. frontage</span><b>${v.span>1?v.span+' address units':'1 address unit'}</b></div><div class="detail-row"><span>Pool table</span><b>${v.pool?'Marked on source':'Not indicated'}</b></div><div class="detail-note">This venue has not yet received its full SoiScope research pass.</div>`}
-function richDetails(d){const chips=(d.known_for||[]).map(x=>`<span class="chip">${x}</span>`).join('');const links=[];if(d.website)links.push(`<a class="profile-link" href="${d.website}" target="_blank" rel="noopener">Website</a>`);if(d.instagram)links.push(`<span class="profile-link">Instagram: ${d.instagram}</span>`);if(d.x?.length)links.push(`<span class="profile-link">X: ${d.x[0]}</span>`);return `<div class="profile-head"><b>${d.name}</b><span class="verified">● Researched</span></div><div class="profile-desc">${d.description}</div><div class="chips">${chips}</div><div class="detail-row"><span>Type</span><b>Hostess bar</b></div><div class="detail-row"><span>Address</span><b>${d.address}</b></div><div class="detail-row"><span>Hours</span><b>${d.opening_hours.display}</b></div><div class="detail-row"><span>Formerly</span><b>${d.former_names.join(', ')||'—'}</b></div><div class="detail-row"><span>Facilities</span><b>Short-time rooms</b></div><div class="detail-row"><span>Drinks</span><b>Full bar</b></div><div class="detail-row"><span>Price note</span><b>From ฿500*</b></div><div class="profile-desc"><b>Vibe:</b> ${d.vibe}</div><div class="hours-alert"><b>Hours conflict:</b> ${d.opening_hours.note}</div><div class="profile-links">${links.join('')}</div><div class="confidence">Verified ${d.verification_date} • ${d.confidence} confidence</div><div class="detail-note">*The ฿500 figure is a third-party starting-price indicator with unclear inclusions, not a confirmed drink price.</div>`}
-let openId=null;function venueElement(v,weight){const wrap=document.createElement('div');wrap.className='venue-wrap';wrap.dataset.type=v.type;wrap.dataset.weight=weight;wrap.style.flex=`${weight} 1 0`;const b=document.createElement('button');b.type='button';b.className='venue'+(v.span>=2?' large':'')+(researched[v.dbid]?' has-profile':'');b.innerHTML=`<div class="top"><div class="name">${cleanName(v.name)}</div><span class="type ${v.type}">${typeName(v.type)}</span></div><div class="addr">${v.address||'Address not shown'}${v.pool?' • Pool':''}</div><div class="venue-details">${researched[v.dbid]?richDetails(researched[v.dbid]):genericDetails(v)}</div>`;b.addEventListener('click',()=>{const same=openId===v.id;document.querySelectorAll('.venue-wrap').forEach(w=>{const base=Number(w.dataset.weight||1);w.style.flex=`${base} 1 0`});document.querySelectorAll('.venue').forEach(x=>x.classList.remove('selected','expanded'));openId=same?null:v.id;if(!same){b.classList.add('selected','expanded');wrap.style.flex=`${weight+(researched[v.dbid]?14:5)} 1 0`}});wrap.appendChild(b);return wrap}
+function unpackVenues(db){const fields=db.venue_fields||[];return(db.venues||[]).map(row=>{if(!Array.isArray(row))return row;const obj={};fields.forEach((field,i)=>{if(row[i]!==undefined)obj[field]=row[i]});return obj})}
+function unique(arr){return [...new Set((arr||[]).filter(Boolean))]}
+function mergeProfile(base){const detail=researched[base.id]||{};return {...(venueDb.defaults||{}),...base,...detail,id:base.id,facilities:unique([...(venueDb.defaults?.facilities||[]),...(base.facilities||[]),...(detail.facilities||[])]),source_markers:base.source_markers||[],contact:{...(venueDb.defaults?.contact||{}),...(base.contact||{}),...(detail.contact||{})},isResearched:Boolean(researched[base.id]),span:spanFromAddress(detail.address||base.address)}}
+function filterKey(v){return v.category==='nightlife'?'bar':v.category==='food'?'food':'service'}
+function badgeText(v){if(v.status==='closed')return 'CLOSED';if(v.category==='nightlife'&&v.facilities.includes('upstairs_gogo'))return 'BAR + AGOGO';if(v.category==='nightlife')return 'BAR';if(v.category==='food')return 'FOOD';return 'SERVICE'}
+function pattayaType(v){if(v.status==='closed')return 'Closed';if(v.subcategory==='agogo')return 'Agogo';if(v.subcategory==='gentlemens_club')return "Gentlemen's Club";if(v.subcategory==='soi_6_bar')return 'Soi 6 Bar';if(v.category==='nightlife'&&v.facilities.includes('upstairs_gogo'))return 'Soi 6 Bar + Agogo Upstairs';if(v.category==='nightlife')return 'Soi 6 Bar';if(v.category==='food')return 'Food / Restaurant';return 'Service'}
+function researchState(v){if(v.status==='closed')return ['closed','Closed'];if(v.isResearched)return ['checked','● Checked'];return ['pending','Research pending']}
+function openingHours(v){if(v.opening_hours?.display)return v.opening_hours.display;return 'Not yet verified'}
+function ladyDrink(v){if(v.category!=='nightlife')return null;if(v.lady_drink?.display)return v.lady_drink.display;return 'Price unavailable'}
+function facilityLabels(v){const map={pool_table:'Pool table',short_time_rooms:'ST rooms',upstairs_gogo:'Agogo upstairs'};const labels=unique((v.facilities||[]).map(x=>map[x]||x.replaceAll('_',' ')));return labels.length?labels.join(' • '):'Not yet verified'}
+function currentDescription(v){if(v.description)return v.description;if(v.status==='closed')return 'Mapped as closed in the current SoiScope database. A full historical research pass has not yet been completed.';if(v.category==='nightlife')return 'This Soi 6 bar is mapped in the database, but its full research pass is still pending. Hours, lady-drink price and other details will be added only when we can verify them.';if(v.category==='food')return 'This food venue is mapped in the database. Menu, hours and current operating details are still awaiting verification.';return 'This establishment is mapped in the database. Its full SoiScope research pass is still pending.'}
+function linkUrl(kind,value){if(!value)return null;if(/^https?:\/\//i.test(value))return value;if(kind==='instagram')return `https://www.instagram.com/${String(value).replace(/^@/,'')}/`;if(kind==='facebook')return `https://www.facebook.com/${String(value).replace(/^@/,'')}`;return null}
+function profileLinks(v){const defs=[['website','Website',v.website],['facebook','Facebook',v.facebook],['instagram','Instagram',v.instagram],['google_maps','Maps',v.google_maps]];const links=defs.map(([kind,label,value])=>{const url=linkUrl(kind,value);return url?`<a class="profile-link" href="${url}" target="_blank" rel="noopener">${label}</a>`:''}).filter(Boolean);if(v.sources?.length&&v.isResearched){v.sources.slice(0,3).forEach(s=>{if(s.url)links.push(`<a class="profile-link" href="${s.url}" target="_blank" rel="noopener">Source</a>`)})}return links.join('')}
+function profileDetails(v){const[stateClass,stateText]=researchState(v);const known=(v.known_for||[]).map(x=>`<span class="chip">${x}</span>`).join('');const ld=ladyDrink(v);const links=profileLinks(v);const former=(v.former_names||[]).length?v.former_names.join(', '):'—';const group=v.group_affiliation||'Not yet verified';const checked=v.verification_date?`Last checked ${v.verification_date}`:'Source-map listing • research pending';const confidence=v.isResearched?`${checked} • ${v.confidence||'researched'} confidence`:checked;return `<div class="profile-head"><b>${v.name}</b><span class="research-state ${stateClass}">${stateText}</span></div><div class="profile-desc">${currentDescription(v)}</div>${known?`<div class="chips">${known}</div>`:''}<div class="detail-row"><span>Type</span><b>${pattayaType(v)}</b></div><div class="detail-row"><span>Address</span><b>${v.address||'Not shown'}</b></div><div class="detail-row"><span>Hours</span><b>${openingHours(v)}</b></div>${ld!==null?`<div class="detail-row"><span>Lady drink</span><b>${ld}</b></div>`:''}<div class="detail-row"><span>Facilities</span><b>${facilityLabels(v)}</b></div><div class="detail-row"><span>Formerly</span><b>${former}</b></div><div class="detail-row"><span>Group</span><b>${group}</b></div>${v.vibe?`<div class="vibe"><b>Vibe:</b> ${v.vibe}</div>`:''}${links?`<div class="profile-links">${links}</div>`:''}<div class="confidence">${confidence}</div>`}
+function venueElement(v,weight){const wrap=document.createElement('div');wrap.className='venue-wrap';wrap.dataset.type=filterKey(v);wrap.dataset.weight=weight;wrap.style.flex=`${weight} 1 0`;const b=document.createElement('button');b.type='button';const type=filterKey(v);b.className='venue'+(v.span>=2?' large':'')+(v.isResearched?' has-profile':'');b.innerHTML=`<div class="top"><div class="name">${v.name}</div><span class="type ${v.status==='closed'?'closed':type}">${badgeText(v)}</span></div><div class="addr">${v.address||'Address not shown'}${v.facilities.includes('pool_table')?' • Pool':''}</div><div class="venue-details">${profileDetails(v)}</div>`;b.addEventListener('click',()=>{const same=openId===v.id;document.querySelectorAll('.venue-wrap').forEach(w=>{const base=Number(w.dataset.weight||1);w.style.flex=`${base} 1 0`});document.querySelectorAll('.venue').forEach(x=>x.classList.remove('selected','expanded'));openId=same?null:v.id;if(!same){b.classList.add('selected','expanded');wrap.style.flex=`${weight+(v.isResearched?15:12)} 1 0`}});wrap.appendChild(b);return wrap}
 function junction(weight){const j=document.createElement('div');j.className='junction';j.style.flex=`${weight} 1 0`;j.innerHTML='<span>TO SOI 6/1</span><small>cut-through</small>';return j}
-const rightBreakAfter=new Set(['Smoke and Mirrors (Pool Table)','Tamar Centre Project Life Foundation','Slutz on Soi 6','Secret Garden']);const JUNCTION_WEIGHT=2.3;function render(){const left=document.getElementById('left'),right=document.getElementById('right');left.innerHTML='';right.innerHTML='';venues.filter(v=>v.side==='L').forEach(v=>left.appendChild(venueElement(v,v.span)));venues.filter(v=>v.side==='R').forEach(v=>{right.appendChild(venueElement(v,v.span));if(rightBreakAfter.has(v.name))right.appendChild(junction(JUNCTION_WEIGHT))})}
-function setFilter(key){document.querySelectorAll('.category').forEach(b=>b.classList.toggle('active',b.dataset.filter===key));document.querySelectorAll('.venue-wrap').forEach(w=>w.classList.toggle('dim',key!=='all'&&w.dataset.type!==key));const label=filterDefs.find(x=>x[0]===key)[1];document.getElementById('status').textContent=key==='all'?`${venues.length} mapped establishments • ${Object.keys(researched).length} researched profile live`:`Spotlighting ${label.toLowerCase()} • other locations remain visible`}
-async function init(){try{const r=await fetch('data/venue-details.json',{cache:'no-store'});if(r.ok){const data=await r.json();researched=data.venues||{}}}catch(e){console.warn('Venue details unavailable',e)}render();setFilter('all')} init();
-</script></body></html>
+function renderFilters(){const counts={all:venues.length,bar:venues.filter(v=>filterKey(v)==='bar').length,service:venues.filter(v=>filterKey(v)==='service').length,food:venues.filter(v=>filterKey(v)==='food').length};const box=document.getElementById('filters');box.innerHTML='';filterDefs.forEach(([key,label,note])=>{const b=document.createElement('button');b.type='button';b.className='category';b.dataset.filter=key;b.innerHTML=`<span>${label}</span><strong>${counts[key]}</strong><span class="small">${note}</span>`;b.addEventListener('click',()=>setFilter(key));box.appendChild(b)})}
+function render(){const left=document.getElementById('left'),right=document.getElementById('right');left.innerHTML='';right.innerHTML='';venues.filter(v=>v.side_of_soi==='left').forEach(v=>left.appendChild(venueElement(v,v.span)));venues.filter(v=>v.side_of_soi==='right').forEach(v=>{right.appendChild(venueElement(v,v.span));if(rightBreakAfter.has(v.id))right.appendChild(junction(JUNCTION_WEIGHT))})}
+function setFilter(key){document.querySelectorAll('.category').forEach(b=>b.classList.toggle('active',b.dataset.filter===key));document.querySelectorAll('.venue-wrap').forEach(w=>w.classList.toggle('dim',key!=='all'&&w.dataset.type!==key));const label=filterDefs.find(x=>x[0]===key)?.[1]||'Everything';const researchedCount=venues.filter(v=>v.isResearched).length;document.getElementById('status').textContent=key==='all'?`${venues.length} database establishments • ${researchedCount} researched`:`Spotlighting ${label.toLowerCase()} • other locations remain visible`}
+async function init(){try{const[baseRes,detailRes]=await Promise.all([fetch('data/venues.json?v=2',{cache:'no-store'}),fetch('data/venue-details.json?v=2',{cache:'no-store'})]);if(!baseRes.ok)throw new Error('Could not load venues.json');venueDb=await baseRes.json();if(detailRes.ok){const detailData=await detailRes.json();researched=detailData.venues||{}}venues=unpackVenues(venueDb).map(base=>mergeProfile(base));profiles=Object.fromEntries(venues.map(v=>[v.id,v]));renderFilters();render();setFilter('all');document.getElementById('researchCount').textContent=`Database-backed profiles • ${venues.filter(v=>v.isResearched).length} checked so far`}catch(err){console.error(err);document.getElementById('status').textContent='Venue database failed to load';document.getElementById('map').outerHTML=`<div class="load-error">SoiScope could not load the venue database. Refresh the page; if this remains visible, check that data/venues.json is present on GitHub Pages.</div>`}}
+init();
+</script>
+</body>
+</html>
