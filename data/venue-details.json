@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "venues": {
     "soi6-040": {
       "name": "Wicked Bar",
@@ -7,32 +7,30 @@
       "address": "437/31",
       "side_of_soi": "left",
       "category": "nightlife",
-      "subcategory": "hostess_bar",
+      "subcategory": "soi_6_bar",
       "status": "current",
       "opening_hours": {
         "display": "16:00–02:00",
-        "note": "Recent Wicked social posts advertise opening from 4 PM until 2 AM. A specialist listing updated 28 Aug 2026 gives 14:00–02:00, while another active Wicked account has advertised selected 17:00–03:00 sessions. Treat hours as variable and verify on the day.",
+        "note": "Hours can vary. Recent venue posts advertise 4 PM–2 AM; another current specialist listing gives 2 PM–2 AM.",
         "confidence": "medium"
       },
-      "description": "Long-running Soi 6 hostess bar near the Beach Road half of the street. Wicked replaced the former Viking Bar identity in 2017 and received a fresh operational relaunch under new management in May 2025.",
-      "vibe": "High-energy party-bar atmosphere with loud music and an active hostess lineup; recent official posts emphasize cold drinks, music and a lively party environment.",
-      "known_for": ["party atmosphere", "hostess bar", "short-time rooms", "long-running Soi 6 presence"],
+      "description": "Independent Soi 6 bar at 437/31, formerly Viking Bar. Wicked has been operating under its current name since 2017 and had a management change in May 2025.",
+      "vibe": "Loud, high-energy Soi 6 party bar with an open-front setup and active bar-girl lineup.",
+      "known_for": ["party atmosphere", "ST rooms", "former Viking Bar", "independent"],
       "facilities": ["short_time_rooms"],
       "food": null,
-      "drinks": "Fully stocked bar; alcoholic beverages confirmed.",
-      "price_notes": [
-        {
-          "display": "Specialist listing shows prices from ฿500",
-          "amount_thb": 500,
-          "basis": "starting-price indicator; exact inclusions unclear",
-          "observed_date": "2026-08-28",
-          "confidence": "low"
-        }
-      ],
+      "drinks": "Full bar",
+      "lady_drink": {
+        "display": "Price unavailable",
+        "amount_thb": null,
+        "verification_date": null,
+        "confidence": "unverified"
+      },
+      "price_notes": [],
       "promotions": [],
-      "music": "Party-oriented / loud contemporary bar music",
-      "seating_style": "Bar seating; some secondary sources describe counter and sofa seating, but exact current layout is not independently confirmed.",
-      "group_affiliation": null,
+      "music": "Loud contemporary party music",
+      "seating_style": "Open-front bar seating",
+      "group_affiliation": "Independent",
       "website": "https://wickedbarpattaya.com",
       "facebook": null,
       "instagram": "wickedsoi6pattaya",
@@ -44,8 +42,8 @@
         "line": null,
         "whatsapp": null
       },
-      "review_summary": "Recent specialist/community material generally describes Wicked as an established mainstream Soi 6 option with a lively party atmosphere. Published subjective ratings vary and are not treated as verified quality metrics.",
-      "community_notes": "A 2025 Pattaya forum contributor reported using Wicked's short-time facilities and described the room itself as basic. This is an individual anecdote, not a verified facility review.",
+      "review_summary": "Recent specialist and community material consistently describes Wicked as an established, lively Soi 6 bar.",
+      "community_notes": "ST rooms are reported as available. Individual room-condition reports are subjective and are not treated as verified quality ratings.",
       "verification_date": "2026-08-31",
       "confidence": "high",
       "sources": [
@@ -54,7 +52,7 @@
           "url": "https://thaiolddriver.com/en/nightlife/wicked-bar",
           "type": "specialist_directory",
           "published_or_updated": "2026-08-28",
-          "supports": ["status", "location", "former_name", "2017 rename", "2025 management change", "hours", "services", "short-time rooms", "starting-price indicator"]
+          "supports": ["status", "location", "former_name", "2017 rename", "2025 management change", "hours", "ST rooms"]
         },
         {
           "label": "Wicked Bar Soi 6 on X",
@@ -73,12 +71,6 @@
           "url": "https://www.youtube.com/@WickedBarSoi6Radio",
           "type": "official_or_affiliated_social",
           "supports": ["current operation", "general atmosphere", "approximate hours"]
-        },
-        {
-          "label": "Pattaya forum discussion",
-          "url": "https://www.pattayaforum.net/forums/threads/soi-6-wir-muessen-reden.123489/page-9",
-          "type": "community",
-          "supports": ["subjective short-time room anecdote"]
         }
       ]
     }
